@@ -1,0 +1,20 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # Use Vagrant's default insecure key
+  config.ssh.insert_key = false
+  # Set timeout to 3 mins
+  config.vm.boot_timeout = 180
+  # Disable default host <-> guest synced folder
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  # Set guest OS type to disable autodetection
+  config.vm.guest = :freebsd
+
+  config.vm.provider :libvirt do |domain|
+    domain.cpus = 1
+    domain.memory = 1024 
+    domain.volume_cache = "unsafe"
+    domain.graphics_type = "none"
+  end
+end
