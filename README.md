@@ -21,7 +21,7 @@ A Packer template for creating a Fortinet FortiGate Vagrant box for the [libvirt
 <pre>
 $ <b>which git unzip packer libvirtd qemu-system-x86_64 vagrant</b>
 $ <b>vagrant plugin list</b>
-vagrant-libvirt (0.3.0, global)
+vagrant-libvirt (0.4.0, global)
 </pre>
 
 1\. Log in and download the FortiGate-VM virtual appliance deployment package from [Fortinet](https://docs.fortinet.com/document/fortigate/6.0.0/fortigate-vm-on-kvm/961760/downloading-the-fortigate-vm-virtual-appliance-deployment-package). Save the file to your `Downloads` directory.
@@ -29,6 +29,7 @@ vagrant-libvirt (0.3.0, global)
 2\. Extract the disk image file to the `/var/lib/libvirt/images` directory.
 
 <pre>
+$ <b>cd $HOME/Downloads</b>
 $ <b>sudo unzip -d /var/lib/libvirt/images FGT_VM64_KVM-v6-build1828-FORTINET.out.kvm.zip</b>
 </pre>
 

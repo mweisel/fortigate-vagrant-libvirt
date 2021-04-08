@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider :libvirt do |domain|
     domain.cpus = 1
     domain.memory = 1024 
-    domain.volume_cache = "unsafe"
-    domain.graphics_type = "none"
+    domain.disk_driver :cache => 'none'
+    domain.graphics_type = 'none'
   end
 end
