@@ -4,6 +4,7 @@
 Vagrant.configure("2") do |config|
   # Use Vagrant's default insecure key
   config.ssh.insert_key = false
+  config.vm.box = "fortinet-fortigate"
   # Set timeout to 3 mins
   config.vm.boot_timeout = 180
   # Disable default host <-> guest synced folder
