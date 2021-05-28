@@ -11,8 +11,10 @@ A Packer template for creating a Fortinet FortiGate Vagrant box for the [libvirt
   * [Packer](https://packer.io) >= 1.70
   * [libvirt](https://libvirt.org)
   * [QEMU](https://www.qemu.org)
-  * [Vagrant](https://www.vagrantup.com) <= 2.2.9
+  * [Vagrant](https://www.vagrantup.com) >= 2.2.10
   * [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt)
+
+> Vagrant version **2.2.16** introduced a bug that *breaks* SSH connectivity - [#12344](https://github.com/hashicorp/vagrant/issues/12344)
 
 ## Steps
 
@@ -21,7 +23,7 @@ A Packer template for creating a Fortinet FortiGate Vagrant box for the [libvirt
 <pre>
 $ <b>which git unzip packer libvirtd qemu-system-x86_64 vagrant</b>
 $ <b>vagrant plugin list</b>
-vagrant-libvirt (0.4.0, global)
+vagrant-libvirt (0.5.1, global)
 </pre>
 
 1\. Log in and download the FortiGate-VM virtual appliance deployment package from [Fortinet](https://docs.fortinet.com/document/fortigate/6.0.0/fortigate-vm-on-kvm/961760/downloading-the-fortigate-vm-virtual-appliance-deployment-package). Save the file to your `Downloads` directory.
