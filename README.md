@@ -11,10 +11,8 @@ A Packer template for creating a Fortinet FortiGate Vagrant box for the [libvirt
   * [Packer](https://packer.io) >= 1.70
   * [libvirt](https://libvirt.org)
   * [QEMU](https://www.qemu.org)
-  * [Vagrant](https://www.vagrantup.com) >= 2.2.10
+  * [Vagrant](https://www.vagrantup.com) >= 2.2.10, != 2.2.16
   * [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt)
-
-> Vagrant version **2.2.16** introduced a bug that *breaks* SSH connectivity - [#12344](https://github.com/hashicorp/vagrant/issues/12344)
 
 ## Steps
 
@@ -23,16 +21,16 @@ A Packer template for creating a Fortinet FortiGate Vagrant box for the [libvirt
 <pre>
 $ <b>which git unzip packer libvirtd qemu-system-x86_64 vagrant</b>
 $ <b>vagrant plugin list</b>
-vagrant-libvirt (0.5.1, global)
+vagrant-libvirt (0.9.0, global)
 </pre>
 
-1\. Log in and download the FortiGate-VM virtual appliance deployment package from [Fortinet](https://docs.fortinet.com/document/fortigate/6.0.0/fortigate-vm-on-kvm/961760/downloading-the-fortigate-vm-virtual-appliance-deployment-package). Save the file to your `Downloads` directory.
+1\. Log in and download the _FortiGate for KVM platform_ package from [Fortinet](https://docs.fortinet.com/document/fortigate-private-cloud/7.2.0/kvm-administration-guide/706376/about-fortigate-vm-on-kvm). Save the file to your `Downloads` directory.
 
 2\. Extract the disk image file to the `/var/lib/libvirt/images` directory.
 
 <pre>
 $ <b>cd $HOME/Downloads</b>
-$ <b>sudo unzip -d /var/lib/libvirt/images FGT_VM64_KVM-v6-build1828-FORTINET.out.kvm.zip</b>
+$ <b>sudo unzip -d /var/lib/libvirt/images FGT_VM64_KVM-v7.2.0.F-build1157-FORTINET.out.kvm.zip</b>
 </pre>
 
 3\. Modify the file ownership and permissions. Note the owner may differ between Linux distributions.
@@ -47,7 +45,7 @@ $ <b>sudo chmod u+x /var/lib/libvirt/images/fortios.qcow2</b>
 > Arch Linux
 
 <pre>
-$ <b>sudo chown nobody:kvm /var/lib/libvirt/images/fortios.qcow2</b>
+$ <b>sudo chown libvirt-qemu:libvirt-qemu /var/lib/libvirt/images/fortios.qcow2</b>
 $ <b>sudo chmod u+x /var/lib/libvirt/images/fortios.qcow2</b>
 </pre>
 
@@ -67,13 +65,13 @@ $ <b>cd fortigate-vagrant-libvirt</b>
 6\. Packer _build_ to create the Vagrant box artifact. Supply the FortiOS version number for the `version` variable value.
 
 <pre>
-$ <b>packer build -var 'version=6.4.5' fortigate.pkr.hcl</b>
+$ <b>packer build -var 'version=7.2.0' fortigate.pkr.hcl</b>
 </pre>
 
 7\. Copy the Vagrant box artifact to the `boxes` directory.
 
 <pre>
-$ <b>cp ./builds/fortinet-fortigate-6.4.5.box $HOME/boxes/</b>
+$ <b>cp ./builds/fortinet-fortigate-7.2.0.box $HOME/boxes/</b>
 </pre>
 
 8\. Copy the box metadata file to the `boxes` directory.
@@ -107,17 +105,17 @@ $ <b>awk '/VER/{gsub(/^ */,"");print}' fortigate.json</b>
 "version": "<b>VER</b>",
 "url": "file:///home/marc/boxes/fortinet-fortigate-<b>VER</b>.box"
 
-$ <b>sed -i 's/VER/6.4.5/g' fortigate.json</b>
+$ <b>sed -i 's/VER/7.2.0/g' fortigate.json</b>
 
 $ <b>awk '/\&lt;version\&gt;|url/{gsub(/^ */,"");print}' fortigate.json</b>
-"version": "<b>6.4.5</b>",
-"url": "file:///home/marc/boxes/fortinet-fortigate-<b>6.4.5</b>.box"
+"version": "<b>7.2.0</b>",
+"url": "file:///home/marc/boxes/fortinet-fortigate-<b>7.2.0</b>.box"
 </pre>
 
 12\. Add the Vagrant box to the local inventory.
 
 <pre>
-$ <b>vagrant box add fortigate.json</b>
+$ <b>vagrant box add --box-version 7.2.0 fortigate.json</b>
 </pre>
 
 ## License
